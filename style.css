@@ -256,21 +256,155 @@ body::before {
     width: 35px;
     height: 35px;
 }
-@media (max-width: 420px) {
-  .main-container {
-    width: 95%;
-    min-height: 550px;
+/* ==========================================
+            MOBILE RESPONSIVE
+========================================== */
+
+@media screen and (max-width: 576px) {
+
+  body{
+    padding: 15px;
+    overflow-y: auto;
   }
 
-  .weather-summary-img {
-    width: 100px;
+  .main-container{
+    width: 100%;
+    max-width: 360px;
+    min-height: auto;
+    padding: 18px;
+    border-radius: 20px;
   }
 
-  .weather-summary-info h1 {
-    font-size: 45px;
+  .input-container{
+    margin-bottom: 20px;
   }
 
-  .forecast-item {
+  .city-input{
+    height: 46px;
+    font-size: 14px;
+    padding: 0 50px 0 18px;
+  }
+
+  .search-btn{
+    right: 14px;
+  }
+
+  .material-symbols-outlined{
+    font-size: 22px;
+  }
+
+  .weather-info{
+    gap: 20px;
+  }
+
+  .country-txt{
+    font-size: 16px;
+  }
+
+  .current-date-txt{
+    font-size: 13px;
+  }
+
+  .weather-summary{
+    gap: 15px;
+  }
+
+  .weather-summary-img{
+    width: 95px;
+    height: 95px;
+  }
+
+  .temp-txt{
+    font-size: 2rem;
+  }
+
+  .condition-text{
+    font-size: 1.4rem;
+  }
+
+  .condition-item span{
+    font-size: 26px;
+  }
+
+  .condition-info h5{
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .weather-conditions-container{
+    gap: 15px;
+  }
+
+  .forecast-item-container{
+    gap: 12px;
+    padding-bottom: 10px;
+  }
+
+  .forcast-item{
     min-width: 80px;
+    padding: 10px;
   }
+
+  .forecast-item-img{
+    width: 32px;
+    height: 32px;
+  }
+
+}
+
+/* Small Phones */
+
+@media screen and (max-width: 375px){
+
+  body{
+    padding: 10px;
+  }
+
+  .main-container{
+    padding: 15px;
+  }
+
+  .country-txt{
+    font-size: 15px;
+  }
+
+  .current-date-txt{
+    font-size: 12px;
+  }
+
+  .weather-summary{
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+
+  .condition-text{
+    text-align: center;
+  }
+
+  .weather-summary-img{
+    width: 85px;
+    height: 85px;
+  }
+
+  .temp-txt{
+    font-size: 1.8rem;
+  }
+
+  .weather-conditions-container{
+    gap: 10px;
+  }
+
+  .condition-item span{
+    font-size: 22px;
+  }
+
+  .condition-info h5{
+    font-size: 13px;
+  }
+
+  .forcast-item{
+    min-width: 75px;
+  }
+
 }
