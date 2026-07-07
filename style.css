@@ -221,12 +221,14 @@ body::before {
     display: flex;
     gap: 15px;
     overflow: scroll;
+     scrollbar-width: none;
     padding-bottom: 12px;
 }
 .forecast-item-container::-webkit-scrollbar{
     height: 8px;
+    display: none;
     cursor: pointer;
-}
+}~
 .forecast-item-container ::-webkit-scrollbar-track{
     background: rgba(0, 0, 0, 0.1);
     border-radius: 99px;
