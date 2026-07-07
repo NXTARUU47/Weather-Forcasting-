@@ -7,7 +7,7 @@
     <title>Weather APP</title>
 
     <link rel="stylesheet" href="style.css">
-
+    <script src="script.js" defer></script>
     <!-- Google Material Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
@@ -31,7 +31,7 @@
         </header>
 
         <!-- Weather Info -->
-        <section class="weather-info"   >
+        <section class="weather-info" style="display:none;">
 
             <!-- Location & Date -->
             <div class="location-date-container d-flex justify-content-between align-items-center">
@@ -96,48 +96,70 @@
 
                     <div class="condition-info  regular-txt text-white">
                         <div class="condition-title">Wind Speed</div>
-                        <div class="condition-value">2 M/s</div>
+                        <div class="wind-value-txt">2 M/s</div>
                     </div>
 
                 </div>
 
             </div>
-        </div>
-        <div class="forecast-item-container">
-            <div class="forcast-item">
-                <h5 class="forecast-item-date regular-txt text-white small fw-semibold">
-                    05 July
-                </h5>
-                <img src="assets/weather/thunderstorm.svg" alt="thunderstorm" class="forecast-item-img">
-                <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">29°C</h5>
             </div>
-            <div class="forcast-item">
-                <h5 class="forecast-item-date regular-txt text-white small fw-semibold">
-                    05 July
-                </h5>
-                <img src="assets/weather/thunderstorm.svg" alt="thunderstorm" class="forecast-item-img">
-                <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">29°C</h5>
+            <div class="forecast-item-container">
+                <div class="forcast-item">
+                    <h5 class="forecast-item-date regular-txt text-white small fw-semibold">
+                        05 July
+                    </h5>
+                    <img src="assets/weather/thunderstorm.svg" alt="thunderstorm" class="forecast-item-img">
+                    <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">29°C</h5>
+                </div>
+                <div class="forcast-item">
+                    <h5 class="forecast-item-date regular-txt text-white small fw-semibold">
+                        05 July
+                    </h5>
+                    <img src="assets/weather/thunderstorm.svg" alt="thunderstorm" class="forecast-item-img">
+                    <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">29°C</h5>
+                </div>
+                <div class="forcast-item">
+                    <h5 class="forecast-item-date regular-txt text-white small fw-semibold">
+                        05 July
+                    </h5>
+                    <img src="assets/weather/thunderstorm.svg" alt="thunderstorm" class="forecast-item-img">
+                    <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">29°C</h5>
+                </div>
+                <div class="forcast-item">
+                    <h5 class="forecast-item-date regular-txt text-white small fw-semibold">
+                        05 July
+                    </h5>
+                    <img src="assets/weather/thunderstorm.svg" alt="thunderstorm" class="forecast-item-img">
+                    <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">29°C</h5>
+                </div>
             </div>
-            <div class="forcast-item">
-                <h5 class="forecast-item-date regular-txt text-white small fw-semibold">
-                    05 July
-                </h5>
-                <img src="assets/weather/thunderstorm.svg" alt="thunderstorm" class="forecast-item-img">
-                <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">29°C</h5>
-            </div>
-            <div class="forcast-item">
-                <h5 class="forecast-item-date regular-txt text-white small fw-semibold">
-                    05 July
-                </h5>
-                <img src="assets/weather/thunderstorm.svg" alt="thunderstorm" class="forecast-item-img">
-                <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">29°C</h5>
-            </div>
-        </div>
         </section>
 
+        <section class="search-city section-message">
+            <img src="assets/message/search-city.png" alt="bg image" class="message-img">
 
+            <div>
+                <h1 class="fs-4 fw-bold text-white">Search City</h1>
 
+                <h4 class="regular-txt text-white small fs-5 ">
+                    Find Out the weather condition of the city
+                </h4>
+            </div>
+        </section>
+        <section class="not-found section-message " style="display:none;">
+            <img src="assets/message/not-found.png" alt="bg image" class="message-img">
+
+            <div>
+                <h1 class="fs-4 fw-bold text-white">Search City</h1>
+
+                <h4 class="regular-txt text-white small fs-5 ">
+                    Find Out the weather condition of the city
+                </h4>
+            </div>
+        </section>
     </main>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
