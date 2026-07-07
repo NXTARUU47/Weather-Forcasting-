@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather APP</title>
+    <meta name="description" content="Check current weather and forecast for any city">
+    <title>Weather App</title>
 
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
     <!-- Google Material Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
 
@@ -21,34 +21,41 @@
 
         <!-- Search -->
         <header class="input-container">
-            <input type="text" class="city-input" placeholder="Search City">
+            <label for="cityInput" class="visually-hidden">Search city</label>
+            <input
+                type="text"
+                id="cityInput"
+                class="city-input"
+                placeholder="Search City"
+                autocomplete="off"
+                aria-label="Search city">
 
-            <button class="search-btn">
-                <span class="material-symbols-outlined">
+            <button class="search-btn" id="searchBtn" type="button" aria-label="Search">
+                <span class="material-symbols-outlined" aria-hidden="true">
                     search
                 </span>
             </button>
         </header>
 
         <!-- Weather Info -->
-        <section class="weather-info" style="display:none;">
+        <section class="weather-info" id="weatherInfo" style="display:none;">
 
             <!-- Location & Date -->
             <div class="location-date-container d-flex justify-content-between align-items-center">
 
                 <div class="location d-flex align-items-center gap-2">
 
-                    <span class="material-symbols-outlined fs-5 text-white">
+                    <span class="material-symbols-outlined fs-5 text-white" aria-hidden="true">
                         location_on
                     </span>
 
-                    <span class="country-txt text-white fw-bold">
+                    <span class="country-txt text-white fw-bold" id="cityName">
                         India
                     </span>
 
                 </div>
 
-                <span class="current-date-txt text-white">
+                <span class="current-date-txt text-white" id="currentDate">
                     Sun, 05 July
                 </span>
 
@@ -57,32 +64,32 @@
             <!-- Weather Summary -->
             <div class="weather-summary mt-0">
 
-                <img src="assets/weather/clouds.svg" alt="Weather" class="weather-summary-img">
+                <img src="assets/weather/clouds.svg" alt="Cloudy weather icon" class="weather-summary-img" id="weatherIcon">
 
                 <div class="weather-summary-info mt-3">
 
-                    <h1 class="temp-txt fs-4 fw-bold text-white">
+                    <h1 class="temp-txt fs-4 fw-bold text-white" id="tempTxt">
                         29°C
                     </h1>
 
-                    <h3 class="condition-text text-white fs-4 fw regular-txt ">
+                    <h3 class="condition-text text-white fs-4 fw regular-txt" id="conditionTxt">
                         Cloud
                     </h3>
                 </div>
             </div>
+
             <div class="weather-conditions-container">
 
-
                 <!-- Humidity -->
-                <div class="condition-item d-flex align-items-start ">
+                <div class="condition-item d-flex align-items-start">
 
-                    <span class="material-symbols-outlined fs-5 me-2 text-white">
+                    <span class="material-symbols-outlined fs-5 me-2 text-white" aria-hidden="true">
                         water_drop
                     </span>
 
                     <div class="condition-info regular-txt text-white">
                         <div class="condition-title">Humidity</div>
-                        <div class="condition-value">55%</div>
+                        <div class="condition-value" id="humidityValue">55%</div>
                     </div>
 
                 </div>
@@ -90,78 +97,86 @@
                 <!-- Wind -->
                 <div class="condition-item d-flex align-items-start">
 
-                    <span class="material-symbols-outlined fs-5 me-2 text-white">
+                    <span class="material-symbols-outlined fs-5 me-2 text-white" aria-hidden="true">
                         air
                     </span>
 
-                    <div class="condition-info  regular-txt text-white">
+                    <div class="condition-info regular-txt text-white">
                         <div class="condition-title">Wind Speed</div>
-                        <div class="wind-value-txt">2 M/s</div>
+                        <div class="wind-value-txt" id="windValue">2 M/s</div>
                     </div>
 
                 </div>
 
             </div>
-            </div>
-            <div class="forecast-item-container">
+
+            <!--
+                Forecast items below are static placeholders.
+                Recommended: generate these dynamically in script.js
+                from your API response instead of hardcoding 4 identical items.
+                Example container to populate: #forecastContainer
+            -->
+            <div class="forecast-item-container" id="forecastContainer">
                 <div class="forcast-item">
                     <h5 class="forecast-item-date regular-txt text-white small fw-semibold">
                         05 July
                     </h5>
-                    <img src="assets/weather/thunderstorm.svg" alt="thunderstorm" class="forecast-item-img">
+                    <img src="assets/weather/thunderstorm.svg" alt="Thunderstorm" class="forecast-item-img">
                     <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">29°C</h5>
                 </div>
                 <div class="forcast-item">
                     <h5 class="forecast-item-date regular-txt text-white small fw-semibold">
-                        05 July
+                        06 July
                     </h5>
-                    <img src="assets/weather/thunderstorm.svg" alt="thunderstorm" class="forecast-item-img">
-                    <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">29°C</h5>
+                    <img src="assets/weather/thunderstorm.svg" alt="Thunderstorm" class="forecast-item-img">
+                    <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">28°C</h5>
                 </div>
                 <div class="forcast-item">
                     <h5 class="forecast-item-date regular-txt text-white small fw-semibold">
-                        05 July
+                        07 July
                     </h5>
-                    <img src="assets/weather/thunderstorm.svg" alt="thunderstorm" class="forecast-item-img">
-                    <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">29°C</h5>
+                    <img src="assets/weather/thunderstorm.svg" alt="Thunderstorm" class="forecast-item-img">
+                    <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">27°C</h5>
                 </div>
                 <div class="forcast-item">
                     <h5 class="forecast-item-date regular-txt text-white small fw-semibold">
-                        05 July
+                        08 July
                     </h5>
-                    <img src="assets/weather/thunderstorm.svg" alt="thunderstorm" class="forecast-item-img">
-                    <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">29°C</h5>
+                    <img src="assets/weather/thunderstorm.svg" alt="Thunderstorm" class="forecast-item-img">
+                    <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">30°C</h5>
                 </div>
             </div>
         </section>
 
-        <section class="search-city section-message">
-            <img src="assets/message/search-city.png" alt="bg image" class="message-img">
+        <!-- Default state: shown before any search -->
+        <section class="search-city section-message" id="searchCitySection">
+            <img src="assets/message/search-city.png" alt="Illustration prompting user to search a city" class="message-img">
 
             <div>
                 <h1 class="fs-4 fw-bold text-white">Search City</h1>
 
-                <h4 class="regular-txt text-white small fs-5 ">
-                    Find Out the weather condition of the city
+                <h4 class="regular-txt text-white small fs-5">
+                    Find out the weather condition of any city
                 </h4>
             </div>
         </section>
-        <section class="not-found section-message " style="display:none;">
-            <img src="assets/message/not-found.png" alt="bg image" class="message-img">
+
+        <!-- Error state: shown when city is not found -->
+        <section class="not-found section-message" id="notFoundSection" style="display:none;">
+            <img src="assets/message/not-found.png" alt="Illustration indicating city was not found" class="message-img">
 
             <div>
-                <h1 class="fs-4 fw-bold text-white">Search City</h1>
+                <h1 class="fs-4 fw-bold text-white">City Not Found</h1>
 
-                <h4 class="regular-txt text-white small fs-5 ">
-                    Find Out the weather condition of the city
+                <h4 class="regular-txt text-white small fs-5">
+                    The city you searched for doesn't exist
                 </h4>
             </div>
         </section>
     </main>
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js" defer></script>
 
 </body>
 

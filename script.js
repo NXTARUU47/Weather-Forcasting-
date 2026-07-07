@@ -1,46 +1,43 @@
 const cityInput = document.querySelector(".city-input");
 const searchBtn = document.querySelector(".search-btn");
-const weatherInfoSection = document.querySelector('.weather-info')
-const notFoundSection = document.querySelector('.not-found')
-const searchCitySection = document.querySelector('.search-city')
-const countyTxt = document.querySelector('.country-txt ')
-const tempTxt = document.querySelector('.temp-txt ')
-const conditiontTxt = document.querySelector('.condition-text ')
-const humidityValueTxt = document.querySelector('.condition-value ')
-const windValueTxt = document.querySelector('.wind-value-txt')
-const weatherSummaryImg = document.querySelector('.weather-summary-img')
-const currentDateTxt = document.querySelector('.current-date-txt ')
-const forecastItemContainer = document.querySelector('.forecast-item-container')
+const weatherInfoSection = document.querySelector('.weather-info');
+const notFoundSection = document.querySelector('.not-found');
+const searchCitySection = document.querySelector('.search-city');
+const countyTxt = document.querySelector('.country-txt');
+const tempTxt = document.querySelector('.temp-txt');
+const conditiontTxt = document.querySelector('.condition-text');
+const humidityValueTxt = document.querySelector('.condition-value');
+const windValueTxt = document.querySelector('.wind-value-txt');
+const weatherSummaryImg = document.querySelector('.weather-summary-img');
+const currentDateTxt = document.querySelector('.current-date-txt');
+const forecastItemContainer = document.querySelector('.forecast-item-container');
 
-
-
-const apiKey = '12820ea71470723aa4210255248097fe'
+const apiKey = '12820ea71470723aa4210255248097fe';
 
 searchBtn.addEventListener("click", () => {
     if (cityInput.value.trim() != '') {
-        updateWeatherInfo(cityInput.value)
-        cityInput.value = ''
-        cityInput.blur()
+        updateWeatherInfo(cityInput.value);
+        cityInput.value = '';
+        cityInput.blur();
     }
 });
 
 cityInput.addEventListener('keydown', (event) => {
     if (event.key == 'Enter' && cityInput.value.trim() != '') {
-        updateWeatherInfo(cityInput.value)
-        cityInput.value = ''
-        cityInput.blur()
+        updateWeatherInfo(cityInput.value);
+        cityInput.value = '';
+        cityInput.blur();
     }
-})
+});
 
 function getCurrentDate() {
-    const currentDate = new Date()
+    const currentDate = new Date();
     const options = {
         weekday: "short",
         day: '2-digit',
         month: 'short'
-    }
-    return currentDate.toLocaleDateString('en-GB', options)
-
+    };
+    return currentDate.toLocaleDateString('en-GB', options);
 }
 
 async function getFetchData(endPoint, city) {
@@ -49,20 +46,23 @@ async function getFetchData(endPoint, city) {
     return response.json();
 }
 
+// Verified against OpenWeatherMap's official condition code docs — ranges are correct
 function getWeatherIcon(id) {
-    if (id <= 232) return 'thunderstrom.svg'
-    if (id <= 321) return 'drizzle.svg'
-    if (id <= 531) return 'rain.svg'
-    if (id <= 622) return 'snow.svg'
-    if (id <= 781) return 'atmosphere.svg'
-    if (id <= 800) return 'clear.svg'
-    else return 'clouds.svg'
+    if (id >= 200 && id <= 232) return "thunderstorm.svg";
+    if (id >= 300 && id <= 321) return "drizzle.svg";
+    if (id >= 500 && id <= 531) return "rain.svg";
+    if (id >= 600 && id <= 622) return "snow.svg";
+    if (id >= 701 && id <= 781) return "atmosphere.svg";
+    if (id === 800) return "clear.svg";
+    if (id >= 801 && id <= 804) return "clouds.svg";
+    return "clouds.svg"; // Fallback for unmapped ids
 }
+
 async function updateWeatherInfo(city) {
-    const weatherData = await getFetchData('weather', city)
+    const weatherData = await getFetchData('weather', city);
     if (weatherData.cod != 200) {
-        showDisplaySection(notFoundSection)
-        return
+        showDisplaySection(notFoundSection);
+        return;
     }
     console.log(weatherData);
 
@@ -71,25 +71,38 @@ async function updateWeatherInfo(city) {
         main: { temp, humidity },
         weather: [{ id, main }],
         wind: { speed }
-    } = weatherData
+    } = weatherData;
 
-    countyTxt.textContent = country
-    tempTxt.textContent = Math.round(temp) + "°C"
-    conditiontTxt.textContent = main
-    humidityValueTxt.textContent = humidity + "%"
-    windValueTxt.textContent = speed + ' M/s'
-    weatherSummaryImg.src = `assets/weather/${getWeatherIcon(id)}`
-    currentDateTxt.textContent = getCurrentDate()
+    countyTxt.textContent = country;
+    tempTxt.textContent = Math.round(temp) + "°C";
+    conditiontTxt.textContent = main;
+    humidityValueTxt.textContent = humidity + "%";
+    windValueTxt.textContent = speed + ' M/s';
+    currentDateTxt.textContent = getCurrentDate();
 
-    await updateForecastsInfo(city)
-    showDisplaySection(weatherInfoSection)
+    // NEW: log the exact icon file being requested, so you can see in console
+    // exactly which filename is being tried for the current condition id
+    const iconFile = getWeatherIcon(id);
+    console.log(`Weather id: ${id} -> icon file: ${iconFile}`);
+
+    weatherSummaryImg.src = `assets/weather/${iconFile}`;
+    // NEW: if the icon file is missing/broken, fall back to clouds.svg
+    // instead of showing a broken image icon
+    weatherSummaryImg.onerror = () => {
+        console.warn(`Icon failed to load: assets/weather/${iconFile} — falling back to clouds.svg`);
+        weatherSummaryImg.onerror = null; // prevent infinite loop if fallback also fails
+        weatherSummaryImg.src = 'assets/weather/clouds.svg';
+    };
+
+    await updateForecastsInfo(city);
+    showDisplaySection(weatherInfoSection);
 }
 
 function showDisplaySection(section) {
     [weatherInfoSection, searchCitySection, notFoundSection].forEach(element => {
         element.style.display = "none";
     });
-    section.style.display = 'flex'
+    section.style.display = 'flex';
 }
 
 async function updateForecastsInfo(city) {
@@ -97,21 +110,17 @@ async function updateForecastsInfo(city) {
 
     const timeTaken = "12:00:00";
     const todayDate = new Date().toISOString().split("T")[0];
-    forecastItemContainer.innerHTML = ''
+    forecastItemContainer.innerHTML = '';
     forecastsData.list.forEach(forecastWeather => {
         if (
             forecastWeather.dt_txt.includes(timeTaken) &&
             !forecastWeather.dt_txt.includes(todayDate)
         ) {
-            updateForecastsItem(forecastWeather)
+            updateForecastsItem(forecastWeather);
         }
     });
     console.log(forecastsData);
-    
 }
-
-
-
 
 function updateForecastsItem(weatherData) {
     const {
@@ -120,20 +129,28 @@ function updateForecastsItem(weatherData) {
         main: { temp }
     } = weatherData;
 
-    const dateTaken = new Date(date)
-    const dateOption={
+    const dateTaken = new Date(date);
+    const dateOption = {
         day: '2-digit',
         month: 'short'
-    }
-    const dateResult = dateTaken.toLocaleDateString('en-US',dateOption)
+    };
+    const dateResult = dateTaken.toLocaleDateString('en-US', dateOption);
+
+    const iconFile = getWeatherIcon(id);
+    // NEW: log each forecast day's id -> icon mapping too
+    console.log(`Forecast ${dateResult} — id: ${id} -> icon file: ${iconFile}`);
+
     const forecastItem = `
         <div class="forcast-item">
             <h5 class="forecast-item-date regular-txt text-white small fw-semibold">
                 ${dateResult}
             </h5>
-            <img src="assets/weather/${getWeatherIcon(id)}" alt="thunderstorm" class="forecast-item-img">
+            <img src="assets/weather/${iconFile}" 
+                 alt="${iconFile.replace('.svg', '')}" 
+                 class="forecast-item-img"
+                 onerror="this.onerror=null; this.src='assets/weather/clouds.svg';">
             <h5 class="forecast-item-temp regular-txt text-white small fw-semibold">
-                ${Math.round(temp) +" °C"}
+                ${Math.round(temp) + " °C"}
             </h5>
         </div>
     `;
