@@ -291,7 +291,7 @@ body::before {
 =========================== */
 
 /* Tablets */
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   .main-container {
     width: 100%;
     min-height: auto;
@@ -371,4 +371,4 @@ body::before {
   .section-message {
     margin-top: 20px;
   }
-}
+} */
